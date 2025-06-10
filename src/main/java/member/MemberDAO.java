@@ -40,6 +40,8 @@ public class MemberDAO {
 		try {
 			pstmt = conn.prepareStatement("SELECT * FROM members");
 			ResultSet rs = pstmt.executeQuery();
+			
+		while(rs.next()) {
 			Member m = new Member();
 			m.setId(rs.getInt("id"));
 			m.setUsername(rs.getString("username"));
@@ -47,6 +49,8 @@ public class MemberDAO {
 			m.setBirthday(rs.getDate("birthday"));
 			m.setEmail(rs.getString("email"));
 			
+			memberlist.add(m);
+		}
 		}catch(Exception e) {
 			
 		}finally {
