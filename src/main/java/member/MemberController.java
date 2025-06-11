@@ -1,7 +1,6 @@
 package member;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/mcontrol")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+	
 	MemberDAO dao;
 
 	@Override
@@ -24,7 +23,6 @@ public class MemberController extends HttpServlet {
 		// TODO Auto-generated method stub
 		super.init(config);
 		dao = new MemberDAO();
-		
 	}
 
 	@Override
@@ -41,14 +39,23 @@ public class MemberController extends HttpServlet {
 			}
 			getServletContext().getRequestDispatcher(view).forward(req, resp);
 		}
-
 	}
 	
 	public String list(HttpServletRequest req, HttpServletResponse resp) {
 		req.setAttribute("memberlist", dao.getAll());
 		return "/memberinfo.jsp";
 	}
+	
 	public String insert(HttpServletRequest req, HttpServletResponse resp) {
-		return "";
-	}
+		//새로운 회원 추가
+		//2025.6.11 마지막수업
+		Member m = new Member();
+		m.setUsername(req.getParameter("username"));
+		m.setCompany(req.getParameter("company"));
+		m.setEmail(req.getParameter("email"));
+		dao.insert(m);
+		return list(req, resp);
+	}	
+	
+	
 }
